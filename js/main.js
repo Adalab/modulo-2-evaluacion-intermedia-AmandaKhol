@@ -1,18 +1,43 @@
 "use strict";
 
-const updateElement = document.querySelector(".js-update");
-const selectElement = document.querySelector(".js-select");
-const faceElement = document.querySelector(".js-face");
+const buttonElement = document.querySelector(".js-button");
+const inputElement = document.querySelector(".js-input");
+const clueElement = document.querySelector(".js-clue");
+const tryElement = document.querySelector(".js-try");
 
-function handleUpdateBtn() {
-  const selectValue = selectElement.value;
-  faceElement.innerHTML = selectValue;
-  const randomNumber = Math.ceil(Math.random() * 100);
-  if (randomNumber % 2 === 0) {
-    containerElement.classList.add("background-color-alt");
+let tryCount = 0;
+const maxNumber = 100;
+
+function getRandomNumber(tryNumber) {
+  return Math.ceil(Math.random() * tryNumber);
+}
+
+const solutionNumber = getRandomNumber(maxNumber);
+console.log(`Mi número aleatorio es: ${solutionNumber}`);
+
+function handleBtn() {
+  const response = inputElement.value;
+  const responseInt = parseInt(response);
+  const responseIntToString = responseInt + "";
+
+  //Check errors in input data
+  if (isNaN(response) || responseIntToString !== response) {
+    console.log("not a number");
+    return;
+  }
+  if (response > maxNumber) {
+    console.log(`El número debe estar entre 1 y ${maxNumber}`);
+  }
+
+  if (response === solutionNumber) {
+    console.log(`¡¡Has ganado campeona!`);
+  } else if (response < solutionNumber) {
+    console.log(`Demasiado bajo`);
+  } else if (response > solutionNumber) {
+    console.log("Demasiado alto");
   } else {
-    containerElement.classList.remove("background-color-alt");
+    console.log("you must debug");
   }
 }
 
-updateElement.addEventListener("click", handleUpdateBtn);
+buttonElement.addEventListener("click", handleBtn);
