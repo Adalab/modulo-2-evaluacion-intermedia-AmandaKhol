@@ -59,6 +59,10 @@
   background-color: rgb(197, 196, 196);
   color: grey;
 }
+.button:focus {
+  outline: none;
+  box-shadow: 8px 8px 8px rgb(29, 39, 56), 3px 3px 3px #315223;
+}
 
 .clue {
   margin-bottom: 20px;
