@@ -4,6 +4,7 @@ const buttonElement = document.querySelector('.js-button');
 const inputElement = document.querySelector('.js-input');
 const clueElement = document.querySelector('.js-clue');
 const tryElement = document.querySelector('.js-try');
+const form = document.querySelector('.form');
 
 let tryCount = 0;
 const maxNumber = 100;
@@ -27,10 +28,10 @@ const solutionNumber = getRandomNumber(minNumber, maxNumber);
 
 function renderFeedback(responseInt) {
   if (responseInt === solutionNumber) {
-    clueElement.innerHTML = `¡¡Has ganado campeona!`;
+    messageToClue(`¡¡Has ganado campeona!`);
     increaseAndPrintCount();
   } else if (responseInt < solutionNumber) {
-    clueElement.innerHTML = `Pista: Demasiado bajo`;
+    messageToClue(`Pista: Demasiado bajo`);
     increaseAndPrintCount();
   } else {
     messageToClue(`Pista: Demasiado alto`);
@@ -40,6 +41,10 @@ function renderFeedback(responseInt) {
 
 function messageToClue(message) {
   clueElement.innerHTML = message;
+}
+
+function handleForm(ev) {
+  ev.preventDefault();
 }
 
 //Button handle
@@ -54,15 +59,18 @@ function handleBtn() {
     responseIntToString !== response ||
     response === ''
   ) {
-    clueElement.innerHTML = `Pista: Escribe un número entre ${minNumber} y ${maxNumber}`;
+    messageToClue(`Pista: Escribe un número entre ${minNumber} y ${maxNumber}`);
     return;
   }
   //Check number include in game range
   if (responseInt > maxNumber || responseInt < minNumber) {
-    clueElement.innerHTML = `Pista: El número debe estar entre  ${minNumber} y ${maxNumber}`;
+    messageToClue(
+      `Pista: El número debe estar entre  ${minNumber} y ${maxNumber}`
+    );
     return;
   }
   renderFeedback(responseInt);
 }
 
 buttonElement.addEventListener('click', handleBtn);
+form.addEventListener('submit', handleForm);
